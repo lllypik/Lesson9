@@ -9,10 +9,10 @@ namespace Task1
     class Program
     {
         // Проверку правильности введенных данных реализовал в отдельном методе c выдачей сигнала о неправильных данных
-        static void DataEnterValidation (out double num, out bool rightData)
+        static void DataEnterValidation (in bool rightDataIn, out double num, out bool rightDataOut)
         {
             num = 0;
-            rightData = true;
+            rightDataOut = rightDataIn;
             try
             {
                 num = Convert.ToDouble(Console.ReadLine());
@@ -20,7 +20,7 @@ namespace Task1
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                rightData  = false;
+                rightDataOut  = false;
             }
         }
                 static void Main(string[] args)
@@ -30,12 +30,12 @@ namespace Task1
             bool flag = true;
             double num1 = 0, num2 = 0, total = 0, operationType = 0;
             Console.Write("Введите первое число ");
-            DataEnterValidation(out num1, out flag);
+            DataEnterValidation(in flag, out num1, out flag);
             Console.Write("Введите второе число ");
-            DataEnterValidation(out num2, out flag);
+            DataEnterValidation(in flag, out num2, out flag);
             Console.Write("Введите код операции над числами (1 - сложение, 2 - вычитание, 3 - деление, 4 - умножение) ");
-            DataEnterValidation(out operationType, out flag);
-            
+            DataEnterValidation(in flag, out operationType, out flag);
+                                
             //блок вычислений и вывода результата
             if (operationType == 1 && flag == true)
             {
@@ -68,8 +68,7 @@ namespace Task1
                 operationName = "*";
                 Console.WriteLine("{0} {1} {2} = {3}", num1, operationName, num2, total);
             }
-            else Console.WriteLine("Некорректные данные");
-
+            else Console.WriteLine("Некорректно введенный тип данных или некорректный тип операции");
             Console.ReadKey();
         }
     }
